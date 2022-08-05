@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app"></div>
+
+    <script>
+        var div = document.querySelector('#app');
+        console.log(div);
+        div.innerHTML = "프린터 테스트";
+
+        var viewModel = {};
+        // 즉시실행함수 자바스크립트 문법.
+        // (function () {
+        //   ...
+        // })()
+        // init과 render와 같은 함수가 애플리케이션에 노출되지 않도록 또 다른 스코프에 넣어 줌.
+        // 변수의 유효범위 관리.
+        (function () {
+            function init() {
+                // 객체 동작 재정의
+                // Object.defineProperty(대상 객체, 객체의 속성, {
+                //  정의할 내용
+                // });
+                Object.defineProperty(viewModel, 'str', {
+                    // 게터
+                    get: function () {
+                        console.log('getter');
+                    },
+                    // 세터
+                    set: function (newValue) {
+                        console.log('setter', newValue);
+                        // 객체의 속성이 변경될때마다, div도 수정.
+                        render(newValue);
+                    }
+                });
+            }
+
+            function render(newValue) {
+                div.innerHTML = newValue;
+            }
+
+            init();
+        })();
+
+
+
+
+    </script>
+</body>
+
+</html>
